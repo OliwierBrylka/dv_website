@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
+{% extends "./base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
 
-    </head>
-    <header>
-
-    </header>
-
-    <body>
+    <main>
         <h1>Estany</h1>
             
         <ul>
@@ -26,5 +22,6 @@
                 <button type="submit">Dodaj</button>
             </form>
         </div>
-    </body>
-</html>
+    </main>
+
+{% endblock %}

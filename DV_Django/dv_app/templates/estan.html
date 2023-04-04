@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <header>
+
+    </header>
+
+    <body>
+        <h1>Estany</h1>
+            
+        <ul>
+            {% for i in estan %}
+            <li><p>sku {{i.sku}}</p></li>
+            <li><p>Ean: {{i.ean}}</p></li>
+            <li><p>Nazwa {{i.name}}</p></li>
+            <li><p>Ilość {{i.Estan}}</p></li>
+            {% endfor %}
+        </ul>
+
+        <div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="text" placeholder="SKU" name="sku">
+                <button type="submit">Dodaj</button>
+            </form>
+        </div>
+    </body>
+</html>

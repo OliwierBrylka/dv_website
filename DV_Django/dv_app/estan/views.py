@@ -12,7 +12,7 @@ def index(request):
 def e_stan(request):
     estan_object = estan.objects.all()
     context = { 'estan': estan_object}
-    
+
 
 
     return render(request, 'estan.html', context)

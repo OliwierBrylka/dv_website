@@ -1,0 +1,1 @@
+przy włączaniu uzywa sie python manage.py runserver --noreply po to aby django nie odpaliło sie 2 razy. Chodzi o to ze django wlacza 2 serwery, jeden pod szukanie zmian w aktualizowanym kodzie a drugi pod normalnie działanie serwera django

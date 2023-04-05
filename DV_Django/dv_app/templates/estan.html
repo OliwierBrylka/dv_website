@@ -4,17 +4,8 @@
 {% block content %}
 
     <main>
+        <link rel="stylesheet" href="{% static 'estan.css' %}">
         <h1>Estany</h1>
-            
-        <ul>
-            {% for i in estan %}
-            <li><p>sku {{i.sku}}</p></li>
-            <li><p>Ean: {{i.ean}}</p></li>
-            <li><p>Nazwa {{i.name}}</p></li>
-            <li><p>Ilość {{i.Estan}}</p></li>
-            {% endfor %}
-        </ul>
-
         <div>
             <form action="" method="POST">
                 {% csrf_token %}
@@ -22,6 +13,16 @@
                 <button type="submit">Dodaj</button>
             </form>
         </div>
+
+        <div>   
+        {% for i in estan %}
+        <form class="f-form" action="" method="POST">
+            {% csrf_token %}
+            <input class="inp" type="text" placeholder="SKU: {{i.sku}}"><input class="inp" type="text" placeholder="EAN: {{i.ean}}"><input class="inp" type="text" placeholder="Nazwa: {{i.name}}"><input class="inp" type="text" placeholder="Estan: {{i.Estan}}"><button type="submit">Aktualizuj</button>
+        </form>
+        {% endfor %}
+        </div>
+        
     </main>
 
 {% endblock %}

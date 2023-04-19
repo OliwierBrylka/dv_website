@@ -493,7 +493,7 @@ def e_stan(request):
 def delete(request, pk):
     
     objestan = estan.objects.get(bl_id = pk)
-    mes = str(copy.copy(object))
+    mes = str(copy.copy(objestan))
     if request.method=='POST':
         objestan.delete()
         message = 'Poprawnie usunieto ' + mes

@@ -70,7 +70,7 @@ def e_stan(request):
         obj = estan.objects.values('bl_id', 'Estan')
 
         url = "https://api.baselinker.com/connector.php"
-        token = "1001116-1005478-DDJL1VP93GA367QZFWQ979ZVNKIJGZGCE23NH5LMLIIT6CIY9XSYMDOWHLBIXV3O"
+        token = ""
         method = "updateInventoryProductsStock"
         
         x = []

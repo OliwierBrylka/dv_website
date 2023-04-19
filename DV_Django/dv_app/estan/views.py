@@ -69,9 +69,9 @@ def e_stan(request):
     if request.POST.get('form_type') == 'bform':
         obj = estan.objects.values('bl_id', 'Estan')
 
-        url = "https://api.baselinker.com/connector.php"
-        token = ""
-        method = "updateInventoryProductsStock"
+        url = url
+        token = token
+        method = method2
         
         x = []
         y = []
@@ -391,7 +391,7 @@ def e_stan(request):
                 }
                 payload = {
                 "token": token,
-                "method": method,
+                "method": method2,
                 "parameters": json.dumps(params)
                 }
                 response = requests.post(url, data=payload)
@@ -407,7 +407,7 @@ def e_stan(request):
 
         payload = {
             "token": token,
-            "method": method,
+            "method": method2,
             "parameters": json.dumps(params)
         }
         print(payload)
@@ -451,7 +451,7 @@ def e_stan(request):
                 }
                 payload = {
                 "token": token,
-                "method": method,
+                "method": method2,
                 "parameters": json.dumps(params)
                 }
                 print(payload)
@@ -474,7 +474,7 @@ def e_stan(request):
                 }
                 payload = {
                 "token": token,
-                "method": method,
+                "method": method2,
                 "parameters": json.dumps(params)
                 }
                 print(payload)

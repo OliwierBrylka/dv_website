@@ -1,28 +1,76 @@
 {% extends "./base.html" %}
 {% load static %}
 {% block title %}Home{% endblock %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'estan.css' %}">
+{% endblock %}
+
+
 {% block content %}
 
     <main>
-        <link rel="stylesheet" href="{% static 'estan.css' %}">
+        
+        
         <h1>Estany</h1>
-        <div>
+        {% for message in messages %}
+        <h2>{{message}}</h2>
+        {% endfor %}
+        <div class="add">
             <form action="" method="POST">
                 {% csrf_token %}
-                <input type="text" placeholder="SKU" name="sku">
-                <button type="submit">Dodaj</button>
+                <input class="placea" type="text" placeholder="SKU" name="sku">
+                <input type="hidden" name="form_type" value="sform">
+                <button class="bt_add" type="submit">Dodaj</button>
             </form>
         </div>
-
-        <div>   
-        {% for i in estan %}
-        <form class="f-form" action="" method="POST">
-            {% csrf_token %}
-            <input class="inp" type="text" placeholder="SKU: {{i.sku}}"><input class="inp" type="text" placeholder="EAN: {{i.ean}}"><input class="inp" type="text" placeholder="Nazwa: {{i.name}}"><input class="inp" type="text" placeholder="Estan: {{i.Estan}}"><button type="submit">Aktualizuj</button>
-        </form>
-        {% endfor %}
-        </div>
+        <div class="addb">
+          <form action="" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="form_type" value="bform">
+              <button class="bt_addb" type="submit">Do Baselinkera</button>
+          </form>
+      </div>
         
+        <div class="form1">
+          <input class="search" id="searchbar" onkeyup="szukaj()" type="text" name="search" placeholder="Szukaj Estanu...">
+          <form action="" method="POST">
+            {% csrf_token %}
+            <ol id='list'>
+            {% for i in estan %}
+            <li id='l_id'>
+            <div class="for">
+              <label class="sku">{{i.sku}}</label>
+              <label class="ean">{{i.ean}}</label>
+              <label class="name">{{i.name}}</label>
+              <input type="number" name="estan_{{i.bl_id}}" value={{i.Estan}}>
+              <button class="bt_up"type="submit">Akutalizuj</button>
+              <a class="del" href="{% url 'delete' i.bl_id %}">Usuń</a><br>
+              <input type="hidden" name="form_type" value={{i.bl_id}}>
+             </div>
+            </li>
+            {% endfor %}
+            </ol>
+            <input type="hidden" name="form_type" value="eform">
+          </form>
+        </div>
+            
+          <script>
+            function szukaj() {
+            var input = document.getElementById("searchbar");
+            var filter = input.value.toUpperCase();
+            var ul = document.getElementById("list");
+            var li = ul.getElementsByTagName("li");
+            for (var i = 0; i < li.length; i++) {
+              var sku = li[i].getElementsByClassName("sku")[0].innerHTML.toUpperCase();
+              var ean = li[i].getElementsByClassName("ean")[0].innerHTML.toUpperCase();
+              if (sku.indexOf(filter) > -1 || ean.indexOf(filter) > -1) {
+                li[i].style.display = "";
+              } else {
+                li[i].style.display = "none";
+              }
+            }
+          }
+        </script>
     </main>
-
+    
 {% endblock %}

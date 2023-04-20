@@ -69,20 +69,16 @@ def e_stan(request):
     if request.POST.get('form_type') == 'bform':
         obj = estan.objects.values('bl_id', 'Estan')
 
-        url = url
-        token = token
-        method = method2
-        
+        url = "https://api.baselinker.com/connector.php"
+        token = "1001116-1005478-DDJL1VP93GA367QZFWQ979ZVNKIJGZGCE23NH5LMLIIT6CIY9XSYMDOWHLBIXV3O"
+        method = "updateInventoryProductsStock"
         x = []
         y = []
-        
         for item in obj:
             x.append(item['bl_id'])  #przypisujesz po kolei wartości do listy
             y.append(item['Estan'])
-
-
-        print(len(obj))
-        for i in range(0,len(obj),100):
+        end = len(obj)
+        for i in range(0,end,100):
             try:
                 params = {
                     "inventory_id": "4591",
@@ -391,100 +387,83 @@ def e_stan(request):
                 }
                 payload = {
                 "token": token,
-                "method": method2,
+                "method": method,
                 "parameters": json.dumps(params)
                 }
                 response = requests.post(url, data=payload)
                 print(response.json())
             except:
-                print('koniec listy',i)
-            else:
-                print('Else')
-            finally:
-                ('Zakończono!')
-            print(params,'\n')
-            print(i)
-
-        payload = {
-            "token": token,
-            "method": method2,
-            "parameters": json.dumps(params)
-        }
-        print(payload)
-
-        for i in range(i,len(obj),10):
-            try:
-                params = {
-                    "inventory_id": "4591",
-                    "products": {
-                        x[i]:{
-                            "bl_6143": y[i]
-                        },
-                        x[i+1]:{
-                            "bl_6143": y[i+1]
-                        },
-                        x[i+2]:{
-                            "bl_6143": y[i+2]
-                        },
-                        x[i+3]:{
-                            "bl_6143": y[i+3]
-                        },
-                        x[i+4]:{
-                            "bl_6143": y[i+4]
-                        },
-                        x[i+5]:{
-                            "bl_6143": y[i+5]
-                        },
-                        x[i+6]:{
-                            "bl_6143": y[i+6]
-                        },
-                        x[i+7]:{
-                            "bl_6143": y[i+7]
-                        },
-                        x[i+8]:{
-                            "bl_6143": y[i+8]
-                        },
-                        x[i+9]:{
-                            "bl_6143": y[i+9]
-                        }
-                    }
-                }
                 payload = {
-                "token": token,
-                "method": method2,
-                "parameters": json.dumps(params)
+                    "token": token,
+                    "method": method,
+                    "parameters": json.dumps(params)
                 }
-                print(payload)
-                response = requests.post(url, data=payload)
-                print(response.json())
-                print(i)
-            except:
-                print('Koniec listy na: ',i)
-
-
-        for i in range(i,len(obj),1):
-            try:
-                params = {
-                    "inventory_id": "4591",
-                    "products": {
-                        x[i]:{
-                            "bl_6143": y[i]
+            
+                for i in range(i,end,10):
+                    try:
+                        params = {
+                            "inventory_id": "4591",
+                            "products": {
+                                x[i]:{
+                                    "bl_6143": y[i]
+                                },
+                                x[i+1]:{
+                                    "bl_6143": y[i+1]
+                                },
+                                x[i+2]:{
+                                    "bl_6143": y[i+2]
+                                },
+                                x[i+3]:{
+                                    "bl_6143": y[i+3]
+                                },
+                                x[i+4]:{
+                                    "bl_6143": y[i+4]
+                                },
+                                x[i+5]:{
+                                    "bl_6143": y[i+5]
+                                },
+                                x[i+6]:{
+                                    "bl_6143": y[i+6]
+                                },
+                                x[i+7]:{
+                                    "bl_6143": y[i+7]
+                                },
+                                x[i+8]:{
+                                    "bl_6143": y[i+8]
+                                },
+                                x[i+9]:{
+                                    "bl_6143": y[i+9]
+                                }
+                            }
                         }
-                    }
-                }
-                payload = {
-                "token": token,
-                "method": method2,
-                "parameters": json.dumps(params)
-                }
-                print(payload)
-                response = requests.post(url, data=payload)
-                print(response.json())
-                print(i)
-            except:
-                print('Koniec listy na: ',i)
-
-            return redirect('estan')
+                        payload = {
+                        "token": token,
+                        "method": method,
+                        "parameters": json.dumps(params)
+                        }
+                        
+                        response = requests.post(url, data=payload)
+                        print(response.json())
+                    except:
+                        for i in range(i,end,1):
+                            params = {
+                                "inventory_id": "4591",
+                                "products": {
+                                    x[i]:{
+                                        "bl_6143": y[i]
+                                    }
+                                }
+                            }
+                            payload = {
+                            "token": token,
+                            "method": method,
+                            "parameters": json.dumps(params)
+                            }
+                            response = requests.post(url, data=payload)
+                            print(response.json())
+                        
+                        print('Koniec listy na: ',i+1)
+                        return redirect('estan')
   
     return render(request, 'estan.html', context)
 
@@ -493,7 +472,7 @@ def e_stan(request):
 def delete(request, pk):
     
     objestan = estan.objects.get(bl_id = pk)
-    mes = str(copy.copy(objestan))
+    mes = str(copy.copy(object))
     if request.method=='POST':
         objestan.delete()
         message = 'Poprawnie usunieto ' + mes

@@ -459,7 +459,6 @@ def e_stan(request):
                             "method": method,
                             "parameters": json.dumps(params)
                             }
-                            print(payload)
                             response = requests.post(url, data=payload)
                             print(response.json())
                         

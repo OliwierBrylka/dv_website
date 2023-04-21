@@ -1,10 +1,7 @@
 # pip install APScheduler
 from django.conf import settings
-import requests
-import json
-import random
-import os
-import time
+import requests, json
+from datetime import datetime
 from estan.models import estan
 
 
@@ -14,7 +11,7 @@ def update_estan():
     obj = estan.objects.values('bl_id', 'Estan')
 
     url = "https://api.baselinker.com/connector.php"
-    token = ""# BL pase token here
+    token = "1001116-1005478-DDJL1VP93GA367QZFWQ979ZVNKIJGZGCE23NH5LMLIIT6CIY9XSYMDOWHLBIXV3O"
     method = "updateInventoryProductsStock"
     
     x = []
@@ -24,8 +21,9 @@ def update_estan():
         x.append(item['bl_id'])  #przypisujesz po kolei wartości do listy
         y.append(item['Estan'])
 
-
-    print(len(obj))
+    now = datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    print("Start API: ", current_time, '\n')
     for i in range(0,len(obj),100):
         try:
             params = {
@@ -341,95 +339,76 @@ def update_estan():
             response = requests.post(url, data=payload)
             print(response.json())
         except:
-            print('koniec listy',i)
-        else:
-            print('Else')
-        finally:
-            ('Zakończono!')
-        print(params,'\n')
-        print(i)
-
-    payload = {
-        "token": token,
-        "method": method,
-        "parameters": json.dumps(params)
-    }
-    print(payload)
-
-    for i in range(i,len(obj),10):
-        try:
-            params = {
-                "inventory_id": "4591",
-                "products": {
-                    x[i]:{
-                        "bl_6143": y[i]
-                    },
-                    x[i+1]:{
-                        "bl_6143": y[i+1]
-                    },
-                    x[i+2]:{
-                        "bl_6143": y[i+2]
-                    },
-                    x[i+3]:{
-                        "bl_6143": y[i+3]
-                    },
-                    x[i+4]:{
-                        "bl_6143": y[i+4]
-                    },
-                    x[i+5]:{
-                        "bl_6143": y[i+5]
-                    },
-                    x[i+6]:{
-                        "bl_6143": y[i+6]
-                    },
-                    x[i+7]:{
-                        "bl_6143": y[i+7]
-                    },
-                    x[i+8]:{
-                        "bl_6143": y[i+8]
-                    },
-                    x[i+9]:{
-                        "bl_6143": y[i+9]
-                    }
-                }
-            }
             payload = {
-            "token": token,
-            "method": method,
-            "parameters": json.dumps(params)
+                "token": token,
+                "method": method,
+                "parameters": json.dumps(params)
             }
-            print(payload)
-            response = requests.post(url, data=payload)
-            print(response.json())
-            print(i)
-        except:
-            print('Koniec listy na: ',i)
-
-
-    for i in range(i,len(obj),1):
-        try:
-            params = {
-                "inventory_id": "4591",
-                "products": {
-                    x[i]:{
-                        "bl_6143": y[i]
+            for i in range(i,len(obj),10):
+                try:
+                    params = {
+                        "inventory_id": "4591",
+                        "products": {
+                            x[i]:{
+                                "bl_6143": y[i]
+                            },
+                            x[i+1]:{
+                                "bl_6143": y[i+1]
+                            },
+                            x[i+2]:{
+                                "bl_6143": y[i+2]
+                            },
+                            x[i+3]:{
+                                "bl_6143": y[i+3]
+                            },
+                            x[i+4]:{
+                                "bl_6143": y[i+4]
+                            },
+                            x[i+5]:{
+                                "bl_6143": y[i+5]
+                            },
+                            x[i+6]:{
+                                "bl_6143": y[i+6]
+                            },
+                            x[i+7]:{
+                                "bl_6143": y[i+7]
+                            },
+                            x[i+8]:{
+                                "bl_6143": y[i+8]
+                            },
+                            x[i+9]:{
+                                "bl_6143": y[i+9]
+                            }
+                        }
                     }
-                }
-            }
-            payload = {
-            "token": token,
-            "method": method,
-            "parameters": json.dumps(params)
-            }
-            print(payload)
-            response = requests.post(url, data=payload)
-            print(response.json())
-            print(i)
-        except:
-            print('Koniec listy na: ',i)
+                    payload = {
+                    "token": token,
+                    "method": method,
+                    "parameters": json.dumps(params)
+                    }
+                    response = requests.post(url, data=payload)
+                    print(response.json())
+                except:
+                    for i in range(i,len(obj),1):
+                        try:
+                            params = {
+                                "inventory_id": "4591",
+                                "products": {
+                                    x[i]:{
+                                        "bl_6143": y[i]
+                                    }
+                                }
+                            }
+                            payload = {
+                            "token": token,
+                            "method": method,
+                            "parameters": json.dumps(params)
+                            }
+                            response = requests.post(url, data=payload)
+                            print(response.json())
+                        except:
+                            print('Koniec listy na: ',i)
+                    now = datetime.now()
+                    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+                    print("Koniec API: ", current_time, '\n')
 
-
-    
-        # response = requests.post(url, data=payload)
-        # print(response.json())
-        

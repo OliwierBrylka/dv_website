@@ -18,7 +18,7 @@ def e_stan(request):
     context = { 'estan': estan_object}
     global url, token, method, method2
     url = "https://api.baselinker.com/connector.php"
-    token = "" #pase BL token here
+    token = "1001116-1005478-DDJL1VP93GA367QZFWQ979ZVNKIJGZGCE23NH5LMLIIT6CIY9XSYMDOWHLBIXV3O"
     method = "getInventoryProductsList"
     method2 = "updateInventoryProductsStock"
 
@@ -459,6 +459,7 @@ def e_stan(request):
                             "method": method,
                             "parameters": json.dumps(params)
                             }
+                            print(payload)
                             response = requests.post(url, data=payload)
                             print(response.json())
                         

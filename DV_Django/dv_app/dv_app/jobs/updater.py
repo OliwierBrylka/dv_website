@@ -10,7 +10,7 @@ job_defaults = {
 
 def start():
     scheduler = BackgroundScheduler(job_defaults=job_defaults, timezone=utc)
-    scheduler.add_job(update_estan, 'interval', seconds=30)
+    scheduler.add_job(update_estan, 'interval', seconds=28800)
     scheduler.start()
 
 # def start():
